@@ -9,12 +9,15 @@ import api from '@/lib/axios'
 import { useToast } from '@/components/ui/toast/use-toast'
 import ModalCriarDisparo from '@/components/email-disparo/ModalCriarDisparo.vue'
 import ListagemDisparos from '@/components/email-disparo/ListagemDisparos.vue'
+import ModalDisparoEnviado from '@/components/email-disparo/ModalDisparoEnviado.vue'
 
 
 const { toast } = useToast()
 
 const store = emailDisparoServico()
 const modalDisparo = ref(false);
+const modalDisparoFinalizado = ref(true);
+const carregando = ref(false)
 
 onMounted(() => {
   store.carregarEmails()
@@ -41,6 +44,7 @@ async function criarDisparoEmail(disparo: {
   corpo: string
 }) {
   try {
+    carregando.value = true
     await store.adicionarDisparo(disparo)
 
     if (store.erro || store.errors) {
@@ -60,16 +64,19 @@ async function criarDisparoEmail(disparo: {
       }
       return false
     }
-
     toast({
       title: 'Sucesso',
       description: 'Disparo adicionado com sucesso!'
     })
-
-    modalDisparo.value = false
+    
+    modalDisparo.value = false;
+    modalDisparoFinalizado.value = true;
+ 
     resetarFormulario()
   } catch (e) {
     console.error('Erro ao salvar disparo', e)
+  }finally {
+    carregando.value = false
   }
 }
 
@@ -108,5 +115,6 @@ function resetarFormulario() {
     </div>
   </div>
 
-  <ModalCriarDisparo :aberto="modalDisparo" @salvar="criarDisparoEmail" @fechar="modalDisparo = false" />
+  <ModalCriarDisparo :aberto="modalDisparo" :carregando="carregando" @salvar="criarDisparoEmail" @fechar="modalDisparo = false" />
+  <ModalDisparoEnviado :aberto="modalDisparoFinalizado" @fechar="modalDisparoFinalizado = false" />
 </template>

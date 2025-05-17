@@ -1,32 +1,3 @@
-<script setup lang="ts">
-import { MoreVertical, MapPin, Bell, Check } from 'lucide-vue-next'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
-import VIcon from '@/components/VIcon.vue'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { cn } from '@/utils'
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu'
-
-defineProps<{
-  listagem: any[]
-}>()
-defineEmits(['editar', 'excluir', 'abrir-enderecos'])
-</script>
 
 <template>
   <div class="p-4 max-w-screen-xl mx-auto">
@@ -78,3 +49,33 @@ defineEmits(['editar', 'excluir', 'abrir-enderecos'])
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { MoreVertical, MapPin, Bell, Check } from 'lucide-vue-next'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow} from '@/components/ui/table'
+import { Button } from '@/components/ui/button'
+import { Badge } from '@/components/ui/badge'
+import VIcon from '@/components/VIcon.vue'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { cn } from '@/utils'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+
+defineProps<{
+  listagem: any[]
+}>()
+defineEmits(['editar', 'excluir', 'abrir-enderecos'])
+</script>

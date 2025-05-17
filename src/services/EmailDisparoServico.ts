@@ -44,7 +44,7 @@ export const emailDisparoServico = defineStore('emailDisparo', {
         const response = await api.post<EmailDisparo>('/email-disparo', emailDisparo)
         this.erro = null
         this.errors = null
-        await this.carregarEmails()
+        setTimeout(() => this.carregarEmails(), 500)
       } catch (err: any) {
         this.erro = err.response?.data?.message || 'Erro ao adicionar.'
         this.errors = err.response?.data?.errors || []

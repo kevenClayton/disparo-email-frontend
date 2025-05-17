@@ -28,17 +28,25 @@
                 <div class="mb-4">
                     <Label for="conteudo">Conteúdo do e-mail</Label>
                     <Editor id="conteudo" v-model="form.corpo" :init="{
-        height: 300,
-        menubar: false,
-        plugins: 'lists link image code',
-        toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image | code',
-        branding: false
-    }" />
+                        height: 300,
+                        menubar: false,
+                        plugins: 'lists link image code',
+                        toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image | code',
+                        branding: false
+                    }" />
                 </div>
 
-                <DialogFooter class="mt-4">
-                    <Button variant="ghost" type="button" @click="$emit('fechar')">Cancelar</Button>
-                    <Button type="submit">Criar agora</Button>
+                <DialogFooter class="mt-4">                    
+                    <Button variant="ghost" type="button" @click="$emit('fechar')">Cancelar</Button>                    
+                    <Button type="submit" :disabled="props.carregando">
+                        <template v-if="props.carregando">
+                            <Loader class="w-4 h-4 animate-spin mr-2" />
+                            Enviando...
+                        </template>
+                        <template v-else>
+                            Criar agora
+                        </template>
+                    </Button>
                 </DialogFooter>
             </form>
         </DialogScrollContent>
@@ -53,8 +61,9 @@ import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import Editor from '@tinymce/tinymce-vue'
+import { Loader } from 'lucide-vue-next'
 
-const props = defineProps<{ aberto: boolean }>()
+const props = defineProps<{ aberto: boolean, carregando: boolean }>()
 const emit = defineEmits(['update:aberto', 'salvar'])
 
 const form = reactive({
@@ -77,6 +86,5 @@ function resetar() {
 
 function submeter() {
     emit('salvar', { ...form })
-    emit('fechar')
 }
 </script>
